@@ -29,14 +29,28 @@ async Task RunSpecificType(Type dayType)
     var instance = Activator.CreateInstance(dayType);
 
     var part1Method = dayType.GetMethod("SolvePart1", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
-    var timer = Stopwatch.StartNew();
-    var result = await (part1Method.Invoke(instance, null) as Task<string>)!;
-    timer.Stop();
-    Console.WriteLine($"{dayType.Name} Part 1: {result} - {1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond}ms");
+
+    var total = new List<long>();
+    string result = string.Empty;
+
+    for (var i = 0; i < 1000; i++)
+    {
+        var timer = Stopwatch.StartNew();
+        result = await (part1Method.Invoke(instance, null) as Task<string>)!;
+        timer.Stop();
+        total.Add(timer.ElapsedTicks);
+    }
+    Console.WriteLine($"{dayType.Name} Part 1: {result} - {1d * total.Average() / TimeSpan.TicksPerMillisecond}ms");
 
     var part2Method = dayType.GetMethod("SolvePart2", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
-    timer = Stopwatch.StartNew();
-    result = await (part2Method.Invoke(instance, null) as Task<string>)!;
-    timer.Stop();
-    Console.WriteLine($"{dayType.Name} Part 2: {result} - {1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond}ms");
+    total.Clear();
+
+    for (var i = 0; i < 1000; i++)
+    {
+        var timer = Stopwatch.StartNew();
+        result = await (part2Method.Invoke(instance, null) as Task<string>)!;
+        timer.Stop();
+        total.Add(timer.ElapsedTicks);
+    }
+    Console.WriteLine($"{dayType.Name} Part 2: {result} - {1d * total.Average() / TimeSpan.TicksPerMillisecond}ms");
 }
