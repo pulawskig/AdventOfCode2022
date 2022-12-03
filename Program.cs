@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Reflection;
 
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-await RunAll();
+RunAll();
 
-async Task RunAll()
+async void RunAll()
 {
     var days = Assembly.GetExecutingAssembly()
         .GetTypes()
@@ -15,16 +15,16 @@ async Task RunAll()
 
     foreach (var day in days)
     {
-        await RunSpecificType(day);
+        RunSpecificType(day);
     }
 }
 
-async Task RunSpecific<TDay>()
+async void RunSpecific<TDay>()
 {
-    await RunSpecificType(typeof(TDay));
+    RunSpecificType(typeof(TDay));
 }
 
-async Task RunSpecificType(Type dayType)
+async void RunSpecificType(Type dayType)
 {
     var instance = Activator.CreateInstance(dayType);
 
@@ -36,7 +36,7 @@ async Task RunSpecificType(Type dayType)
     for (var i = 0; i < 1000; i++)
     {
         var timer = Stopwatch.StartNew();
-        result = await (part1Method.Invoke(instance, null) as Task<string>)!;
+        result = (part1Method.Invoke(instance, null) as string)!;
         timer.Stop();
         total.Add(timer.ElapsedTicks);
     }
@@ -48,7 +48,7 @@ async Task RunSpecificType(Type dayType)
     for (var i = 0; i < 1000; i++)
     {
         var timer = Stopwatch.StartNew();
-        result = await (part2Method.Invoke(instance, null) as Task<string>)!;
+        result = (part2Method.Invoke(instance, null) as string)!;
         timer.Stop();
         total.Add(timer.ElapsedTicks);
     }

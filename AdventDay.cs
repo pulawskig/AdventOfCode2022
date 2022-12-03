@@ -16,11 +16,11 @@ namespace AdventOfCode2022
             Input = LoadInput();
         }
 
+        protected abstract string SolvePart1();
+
+        protected abstract string SolvePart2();
+
         protected abstract TInput LoadInput();
-
-        protected abstract Task<string> SolvePart1();
-
-        protected abstract Task<string> SolvePart2();
 
         protected string[] GetInputLines()
         {

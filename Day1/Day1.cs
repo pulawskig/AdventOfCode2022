@@ -9,14 +9,14 @@ namespace AdventOfCode2022.Day1
 {
     public class Day1 : AdventDay<Day1, List<List<long>>>
     {
-        protected override async Task<string> SolvePart1()
+        protected override string SolvePart1()
         {
             var result = Input.Select(group => group.Sum()).Max();
 
             return result.ToString();
         }
 
-        protected override async Task<string> SolvePart2()
+        protected override string SolvePart2()
         {
             var result = Input
                 .Select(group => group.Sum())

@@ -24,5 +24,29 @@ namespace AdventOfCode2022.Tools
             }
             yield return list;
         }
+
+        public static IEnumerable<IEnumerable<T>> SplitBy<T>(this IEnumerable<T> source, int count)
+        {
+            var list = new List<T>();
+            var i = 0;
+
+            foreach (var item in source)
+            {
+                list.Add(item);
+
+                if ((i + 1) % count == 0)
+                {
+                    yield return list;
+                    list = new List<T>();
+                }
+
+                i++;
+            }
+
+            if (list.Any())
+            {
+                yield return list;
+            }
+        }
     }
 }

@@ -8,17 +8,17 @@ namespace AdventOfCode2022.Day2
 {
     public class Day2 : AdventDay<Day2, List<string[]>>
     {
-        protected override async Task<string> SolvePart1()
+        protected override string SolvePart1()
         {
-            return LoadInput()
+            return Input
                 .Select(Match.PrepareForPart1)
                 .Sum(m => m.Calculate())
                 .ToString();
         }
 
-        protected override async Task<string> SolvePart2()
+        protected override string SolvePart2()
         {
-            return LoadInput()
+            return Input
                 .Select(Match.PrepareForPart2)
                 .Sum(m => m.Calculate())
                 .ToString();
