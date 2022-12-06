@@ -40,7 +40,7 @@ async void RunSpecificType(Type dayType)
         timer.Stop();
         total.Add(timer.ElapsedTicks);
     }
-    Console.WriteLine($"{dayType.Name} Part 1: {result} - {1d * total.Average() / TimeSpan.TicksPerMillisecond}ms");
+    Console.WriteLine($"{dayType.Name} Part 1: {result} - {(total.Average() / TimeSpan.TicksPerMillisecond):N7}ms");
 
     var part2Method = dayType.GetMethod("SolvePart2", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
     total.Clear();
@@ -52,5 +52,5 @@ async void RunSpecificType(Type dayType)
         timer.Stop();
         total.Add(timer.ElapsedTicks);
     }
-    Console.WriteLine($"{dayType.Name} Part 2: {result} - {1d * total.Average() / TimeSpan.TicksPerMillisecond}ms");
+    Console.WriteLine($"{dayType.Name} Part 2: {result} - {(total.Average() / TimeSpan.TicksPerMillisecond):N7}ms");
 }

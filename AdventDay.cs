@@ -24,7 +24,12 @@ namespace AdventOfCode2022
 
         protected string[] GetInputLines()
         {
-            return File.ReadAllLines($"{typeof(TDay).Name}/Input.txt");
+            return File.ReadAllLines(GetInputFilePath());
+        }
+
+        protected virtual string GetInputFilePath()
+        {
+            return $"{typeof(TDay).Name}/Input.txt";
         }
     }
 }
