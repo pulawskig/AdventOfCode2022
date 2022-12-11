@@ -100,7 +100,7 @@ namespace AdventOfCode2022.Day11
                         item = monkey.Operation.Perform(item);
                         item = relaxation(item);
 
-                        if (item % monkey.TestCheck == BigInteger.Zero)
+                        if (item % monkey.TestCheck == 0L)
                         {
                             monkey.TruthyTarget.Items.Enqueue(item);
                         }
