@@ -30,27 +30,26 @@ async void RunSpecificType(Type dayType)
 
     var part1Method = dayType.GetMethod("SolvePart1", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
 
-    var total = new List<long>();
-    string result = string.Empty;
+    string result;
 
-    for (var i = 0; i < 1000; i++)
+    var timer = Stopwatch.StartNew();
+    result = (part1Method.Invoke(instance, null) as string)!;
+    timer.Stop();
+
+    Console.WriteLine($"{dayType.Name} Part 1: {result ?? string.Empty} - {(1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond):N4}ms");
+
+    var reloadProperty = dayType.GetProperty("ReloadForPart2", BindingFlags.Instance | BindingFlags.Public, null, typeof(bool), Array.Empty<Type>(), default);
+
+    if ((bool)reloadProperty!.GetValue(instance)!)
     {
-        var timer = Stopwatch.StartNew();
-        result = (part1Method.Invoke(instance, null) as string)!;
-        timer.Stop();
-        total.Add(timer.ElapsedTicks);
+        instance = Activator.CreateInstance(dayType);
     }
-    Console.WriteLine($"{dayType.Name} Part 1: {result} - {(total.Average() / TimeSpan.TicksPerMillisecond):N7}ms");
 
     var part2Method = dayType.GetMethod("SolvePart2", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
-    total.Clear();
 
-    for (var i = 0; i < 1000; i++)
-    {
-        var timer = Stopwatch.StartNew();
-        result = (part2Method.Invoke(instance, null) as string)!;
-        timer.Stop();
-        total.Add(timer.ElapsedTicks);
-    }
-    Console.WriteLine($"{dayType.Name} Part 2: {result} - {(total.Average() / TimeSpan.TicksPerMillisecond):N7}ms");
+    timer = Stopwatch.StartNew();
+    result = (part2Method.Invoke(instance, null) as string)!;
+    timer.Stop();
+
+    Console.WriteLine($"{dayType.Name} Part 2: {result ?? string.Empty} - {(1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond):N4}ms");
 }

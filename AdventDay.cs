@@ -11,6 +11,8 @@ namespace AdventOfCode2022
     {
         protected TInput Input { get; init; }
 
+        public bool ReloadForPart2 { get; protected set; }
+
         public AdventDay()
         {
             Input = LoadInput();
