@@ -116,43 +116,6 @@ namespace AdventOfCode2022.Day12
             throw new InvalidOperationException();
         }
 
-        private List<Area> DFS(Area start, Func<Area, bool> endPredicate)
-        {
-            var stack = new Stack<Area>();
-            var previous = new Dictionary<Area, Area>();
-
-            stack.Push(start);
-
-            while (stack.Count > 0)
-            {
-                var current = stack.Pop();
-                if (current.Visited)
-                {
-                    continue;
-                }
-
-                current.Visited = true;
-
-                if (endPredicate(current))
-                {
-                    return ReconstructPath(previous, current);
-                }
-
-                foreach (var neighbour in current.Neighbours)
-                {
-                    if (neighbour.Visited || current.Height - neighbour.Height > 1)
-                    {
-                        continue;
-                    }
-
-                    stack.Push(neighbour);
-                    previous[neighbour] = current;
-                }
-            }
-
-            throw new InvalidOperationException();
-        }
-
         private List<Area> ReconstructPath(Dictionary<Area, Area> previous, Area end)
         {
             var list = new List<Area>
