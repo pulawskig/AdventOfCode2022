@@ -32,11 +32,11 @@ async void RunSpecificType(Type dayType)
 
     string result;
 
-    var timer = Stopwatch.StartNew();
+    var timestamp = Stopwatch.GetTimestamp();
     result = (part1Method.Invoke(instance, null) as string)!;
-    timer.Stop();
+    var time = Stopwatch.GetElapsedTime(timestamp);
 
-    Console.WriteLine($"{dayType.Name} Part 1: {result ?? string.Empty} - {(1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond):N4}ms");
+    Console.WriteLine($"{dayType.Name} Part 1: {result ?? string.Empty} - {time.TotalMilliseconds:N4}ms");
 
     var reloadProperty = dayType.GetProperty("ReloadForPart2", BindingFlags.Instance | BindingFlags.Public, null, typeof(bool), Array.Empty<Type>(), default);
 
@@ -47,9 +47,9 @@ async void RunSpecificType(Type dayType)
 
     var part2Method = dayType.GetMethod("SolvePart2", BindingFlags.Instance | BindingFlags.NonPublic, null, Array.Empty<Type>(), default)!;
 
-    timer = Stopwatch.StartNew();
+    timestamp = Stopwatch.GetTimestamp();
     result = (part2Method.Invoke(instance, null) as string)!;
-    timer.Stop();
+    time = Stopwatch.GetElapsedTime(timestamp);
 
-    Console.WriteLine($"{dayType.Name} Part 2: {result ?? string.Empty} - {(1d * timer.ElapsedTicks / TimeSpan.TicksPerMillisecond):N4}ms");
+    Console.WriteLine($"{dayType.Name} Part 2: {result ?? string.Empty} - {time.TotalMilliseconds:N4}ms");
 }

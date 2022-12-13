@@ -48,5 +48,27 @@ namespace AdventOfCode2022.Tools
                 yield return list;
             }
         }
+
+        public static IEnumerable<TResult> ZipSafe<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector, TFirst emptyFirst, TSecond emptySecond)
+        {
+            using IEnumerator<TFirst> e1 = first.GetEnumerator();
+            using IEnumerator<TSecond> e2 = second.GetEnumerator();
+
+            while (true)
+            {
+                var firstSuccess = e1.MoveNext();
+                var secondSuccess = e2.MoveNext();
+
+                if (!firstSuccess && !secondSuccess)
+                {
+                    break;
+                }
+
+                var elementFirst = firstSuccess ? e1.Current : emptyFirst;
+                var elementSecond = secondSuccess ? e2.Current : emptySecond;
+
+                yield return resultSelector(elementFirst, elementSecond);
+            }
+        }
     }
 }
